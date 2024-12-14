@@ -11,6 +11,8 @@ def stockhoka(data, partition_key):
             recvvalue.append(float(i))
 
     fields = {
+        "MKSC_SHRN_ISCD": recvvalue[1],
+        "HOUR_CLS_CODE": recvvalue[2],
         **{f"ASKP{i+1}": recvvalue[i+3] for i in range(10)},
         **{f"BIDP{i+1}": recvvalue[i+13] for i in range(10)},
         **{f"ASKP_RSQN{i+1}": recvvalue[i+23] for i in range(10)},
@@ -30,8 +32,7 @@ def stockhoka(data, partition_key):
         "TOTAL_BIDP_RSQN_ICDC": recvvalue[55],
         "OVTM_TOTAL_ASKP_ICDC": recvvalue[56],
         "OVTM_TOTAL_BIDP_ICDC": recvvalue[57],
-        "STCK_DEAL_CLS_CODE": recvvalue[58],
-        "HOUR_CLS_CODE": recvvalue[2]
+        "STCK_DEAL_CLS_CODE": recvvalue[58]
     }
 
     return fields
