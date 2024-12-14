@@ -12,10 +12,11 @@ class InfluxDBHandler:
         )
         self.write_api = self.influx_client.write_api(write_options=SYNCHRONOUS)
         self.bucket = influx_bucket
+        self.org = influx_org
         
     
     def send_to_influxdb(self, partition_key: str, data: dict):
-        if partition_key == "HOSTASP0":
+        if partition_key == "H0STASP0":
             measurement = 'realtime_hoka'
             stockcode = data.pop("MKSC_SHRN_ISCD", None)  # Remove Stock code from data and use it as a tag
             hour_cls_code = data.pop("HOUR_CLS_CODE", None)  # Remove HOUR_CLS_CODE from data and use it as a tag
@@ -30,7 +31,7 @@ class InfluxDBHandler:
             for field_key, field_value in fields.items():
                 point.field(field_key, field_value)
         
-            self.write_api.write(bucket=INFLUXDB_BUCKET, org=INFLUXDB_ORG, record=point)
+            self.write_api.write(bucket=self.bucket, org=self.org, record=point)
 
         elif partition_key == "H0STCNT0":
             measurement = 'realtime_purchase'

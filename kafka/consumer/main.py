@@ -3,7 +3,12 @@ from influx_handler import InfluxDBHandler
 import json
 
 ## InfluxDB를 초기화한다.
-influx_handler = InfluxDBHandler(influx_url = '', influx_token = '', influx_org = 'project', influx_bucket = 'stock')
+influx_handler = InfluxDBHandler(
+    influx_url = '',
+    influx_token = '',
+    influx_org = 'project',
+    influx_bucket = 'stock'
+    )
 
 
 ## Consumer를 초기화한다.
