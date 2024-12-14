@@ -4,6 +4,7 @@ import faust
 # realtime_hoka 데이터 클래스 정의
 @dataclass
 class realtime_hoka(faust.Record, serializer='json'):
+    MKSC_SHRN_ISCD: str ## 유가증권 단축 종목 코드
     HOUR_CLS_CODE: str          ## 시간 구분코드
     ASKP1: float                  ## 매도호가 1
     ASKP2: float                  ## 매도호가 2
