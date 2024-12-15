@@ -9,7 +9,7 @@ async def connect():
     ## API 키와 URL, 주식 코드를 입력한다.
     g_appkey = ''
     g_appsceret = ''
-    url = ''
+    url = 'ws://ops.koreainvestment.com:21000'
 
     ## Websocket 키를 생성한다.
     g_approval_key = get_approval(g_appkey, g_appsceret)
