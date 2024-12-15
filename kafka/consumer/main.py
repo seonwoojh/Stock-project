@@ -1,11 +1,20 @@
 from confluent_kafka import Consumer, KafkaException
 from influx_handler import InfluxDBHandler
 import json
+import os
+
+## Init ENV for Container
+influx_url = os.environ['INFLUX_URL']
+influx_token = os.environ['INFLUX_TOKEN']
+kafka_server = os.environ['KAFKA_SERVER']
+group_id = os.environ['GROUP_ID']
+topic = os.environ['TOPIC']
+
 
 ## InfluxDB를 초기화한다.
 influx_handler = InfluxDBHandler(
-    influx_url = '',
-    influx_token = '',
+    influx_url = influx_url,
+    influx_token = influx_token,
     influx_org = 'project',
     influx_bucket = 'stock'
     )
@@ -13,12 +22,12 @@ influx_handler = InfluxDBHandler(
 
 ## Consumer를 초기화한다.
 consumer_config = {
-    'bootstrap.servers': '',
-    'group.id' : '',
+    'bootstrap.servers': kafka_server,
+    'group.id' : group_id,
     'auto.offset.reset': 'earliest'
 }
 consumer = Consumer(consumer_config)
-consumer.subscribe(['']) ## 토픽이름 지정
+consumer.subscribe([f'{topic}']) ## 토픽이름 지정
 
 try:
     print("Consuming messages from Kafka and writing to InfluxDB...")
