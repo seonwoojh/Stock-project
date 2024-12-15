@@ -30,8 +30,8 @@ resource "aws_iam_instance_profile" "ec2_instance_profile" {
 ## Database Data 디렉토리의 EBS 추가 스토리지를 생성한다.
 resource "aws_ebs_volume" "Database" {
   availability_zone = module.vpc.azs[0]
-  size = 100
-  type = "gp3"
+  size              = 100
+  type              = "gp3"
 
   tags = {
     Name = " Database EBS"
