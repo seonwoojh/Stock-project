@@ -4,11 +4,11 @@ import json
 import os
 
 ## Init ENV for Container
-influx_url = os.environ['influx_url']
-influx_token = os.environ['influx_token']
-kafka_server = os.environ['kafka_server']
-group_id = os.environ['group_id']
-topic = os.environ['topic']
+influx_url = os.environ['INFLUX_URL']
+influx_token = os.environ['INFLUX_TOKEN']
+kafka_server = os.environ['KAFKA_SERVER']
+group_id = os.environ['GROUP_ID']
+topic = os.environ['TOPIC']
 
 
 ## InfluxDB를 초기화한다.
