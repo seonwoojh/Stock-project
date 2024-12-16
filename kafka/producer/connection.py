@@ -17,7 +17,7 @@ async def connect():
     url = 'ws://ops.koreainvestment.com:21000'
 
     ## Websocket 키를 생성한다.
-    g_approval_key = get_approval(g_appkey, g_appsceret)
+    g_approval_key = get_approval(g_appkey, g_appsecret)
 
     ## 가져올 데이터를 정의한다.
     ## H0STASP0 실시간 호가 /// H0STCNT0 실시간 체결가
