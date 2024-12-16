@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: producer-config-dev
+  namespace: stock
+
+data:
+  KAFKA_SERVER: ''
+  HOKA_TOPIC: ''
+  CONCLUSION_TOPIC: ''
+  STOCK_CODE: ''
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: consumer-config-dev
+  namespace: stock
+data:
+  INFLUX_URL: ''
+  KAFKA_SERVER: ''
+  GROUP_ID: ''
+  TOPIC: ''
