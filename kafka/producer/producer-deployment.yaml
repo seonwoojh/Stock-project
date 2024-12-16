@@ -17,20 +17,17 @@ spec:
     spec:
       containers:
         - name: stock-producer
-          image: xxxxx.dkr.ecr.ap-northeast-2.amazonaws.com/stock/xxxxx:latest
+          image: xxxxxx.dkr.ecr.ap-northeast-2.amazonaws.com/stock/xxxx:latest
           resources:
             limits:
               memory: "128Mi"
               cpu: "500m"
-          env:
-          - name: KAFKA_SERVER
-            value: ""
+          envFrom:
+          - configMapRef:
+              name: producer-config-dev
+          - secretRef:
+              name: producer-secret-dev
 
-          - name: HOKA_TOPIC
-            value: ""
-
-          - name: CONCLUSION_TOPIC
-            value: ""
       imagePullSecrets:
         - name: stock-producer
 
