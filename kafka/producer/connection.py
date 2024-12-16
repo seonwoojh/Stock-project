@@ -4,11 +4,16 @@ import websockets
 import asyncio
 import datetime
 import json
+import os
+
+key = os.environ['APP_KEY']
+secret = os.environ['APP_SECRET']
+stock_code = os.environ['STOCK_CODE']
 
 async def connect():
     ## API 키와 URL, 주식 코드를 입력한다.
-    g_appkey = ''
-    g_appsceret = ''
+    g_appkey = key
+    g_appsecret = secret
     url = 'ws://ops.koreainvestment.com:21000'
 
     ## Websocket 키를 생성한다.
@@ -16,7 +21,7 @@ async def connect():
 
     ## 가져올 데이터를 정의한다.
     ## H0STASP0 실시간 호가 /// H0STCNT0 실시간 체결가
-    code_list = [['1','H0STASP0','005930'],['1','H0STCNT0','005930']]
+    code_list = [['1','H0STASP0', stock_code],['1','H0STCNT0', stock_code]]
     senddata_list = []
 
     ## API 서버에 보낼 데이터 리스트를 생성한다.(TR_ID, 데이터 타입, 주식 코드)
