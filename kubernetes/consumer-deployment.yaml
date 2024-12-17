@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-conclusion-deploy
+  namespace: stock
+  labels:
+    app: consumer-conclusion-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: consumer-conclusion
+  template:
+    metadata:
+      labels:
+        app: consumer-conclusion
+    spec:
+      hostNetwork: true
+      containers:
+        - name: consumer-conclusion
+          image: xxxx.dkr.ecr.ap-northeast-2.amazonaws.com/stock/xxxx:latest
+          resources:
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+          envFrom:
+          - configMapRef:
+              name: consumer-config-dev
+          - secretRef:
+              name: consumer-secret-dev
+
+          env:
+          - name: TOPIC
+            value: "stock.samsung.conclusion.data"
+
+      imagePullSecrets:
+        - name: stock-consumer
+
+      nodeSelector:
+        key: kube-master1
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-hoka-deploy
+  namespace: stock
+  labels:
+    app: consumer-hoka-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: consumer-hoka
+  template:
+    metadata:
+      labels:
+        app: consumer-hoka
+    spec:
+      hostNetwork: true
+      containers:
+        - name: consumer-hoka
+          image: xxxx.dkr.ecr.ap-northeast-2.amazonaws.com/stock/xxxx:latest
+          resources:
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+          envFrom:
+          - configMapRef:
+              name: consumer-config-dev
+          - secretRef:
+              name: consumer-secret-dev
+
+          env:
+          - name: TOPIC
+            value: "stock.samsung.hoka.data"
+
+      imagePullSecrets:
+        - name: stock-consumer
+
+      nodeSelector:
+        key: kube-master1
