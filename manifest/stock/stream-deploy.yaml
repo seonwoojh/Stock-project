@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stream-deploy
+  namespace: stock
+  labels:
+    app: stream-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stock-stream
+  template:
+    metadata:
+      labels:
+        app: stock-stream
+    spec:
+      hostNetwork: true
+      containers:
+        - name: stock-stream
+          image: xxxx.dkr.ecr.ap-northeast-2.amazonaws.com/stock/xxxx:latest
+          resources:
+            limits:
+              memory: "2Gi"
+              cpu: "2500m"
+          envFrom:
+          - configMapRef:
+              name: stream-config-dev
+          
+          env:
+          - name: NOTI_TYPE
+            value: 'compared_previous'
+          
+          - name: USER_CONDITION
+            value: "1300|미만"
+
+      imagePullSecrets:
+        - name: stock-stream
