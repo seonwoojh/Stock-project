@@ -1,30 +1,37 @@
-from Schema import realtime_hoka, realtime_purchase
+from Schema import realtime_purchase
 from datetime import datetime, timedelta
-from faust.cli import option
 import pytz
 import faust
 import os
+
+## Init ENV for Container
+kafka_server = os.environ['KAFKA_SERVER']
+source_topic = os.environ['SOURCE_TOPIC']
+destination_topic = os.environ['DESTINATION_TOPIC']
+stock_code = os.environ['STOCK_CODE']
+
+## 어떤 알림 받을건지 변수 추가 예정
 
 # KST 시간대 설정
 KST = pytz.timezone('Asia/Seoul')
 
 ## Faust 앱을 정의한다.
-app = faust.App('stock_conclusion_app', broker='kafka://192.168.226.128:29092', serializer='json', value_serializer='json',key_type=str, value_type=realtime_purchase)
+app = faust.App('stock_conclusion_app', broker=f'kafka://{kafka_server}', serializer='json', value_serializer='json',key_type=str, value_type=realtime_purchase)
 
 ## 데이터를 불러올 원본 토픽을 지정한다.
 stock_conclusion_topic = app.topic(
-    'stock.samsung.conclusion.data',
-     key_type=str,
-     value_type=realtime_purchase
+    f'{source_topic}',
+    key_type=str,
+    value_type=realtime_purchase
 )
 
 ## 조건에 맞는 데이터를 저장할(알람 발송용) 토픽을 지정한다.
-new_topic = app.topic('alert-topic', key_type=str, value_type=dict)
+new_topic = app.topic(f'{destination_topic}', key_type=str, value_type=dict)
 
 @app.agent(stock_conclusion_topic, sink=[new_topic])
 async def stock_fluctuation_rate(stream):
-    ## 정상 거래중이면서 주식 코드가 삼성전자인 5930인경우 여기서 MKSC_SHRN_ISCD는 나중에 인자로 설정 가능한지 테스트
-    async for data in stream.filter(lambda x: x.MKSC_SHRN_ISCD == 5930.0):
+    ## 정상 거래중이면서 주식 코드가 사용자가 설정한 종목인 경우를 필터링 한다.
+    async for data in stream.filter(lambda x: str(x.MKSC_SHRN_ISCD) == stock_code and x.TRHT_YN == "N"):
         try:
             ### 등락률 알림
             match data.PRDY_VRSS_SIGN:
