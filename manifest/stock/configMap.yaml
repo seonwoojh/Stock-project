@@ -20,3 +20,16 @@ data:
   INFLUX_URL: ''
   KAFKA_SERVER: ''
   GROUP_ID: 'project'
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: stream-config-dev
+  namespace: stock
+
+data:
+  KAFKA_SERVER: ''
+  SOURCE_TOPIC: 'stock.samsung.conclusion.data'
+  DESTINATION_TOPIC: 'alert-topic'
+  STOCK_CODE: '5930.0'
