@@ -15,7 +15,6 @@ spec:
       labels:
         app: consumer-conclusion
     spec:
-      hostNetwork: true
       containers:
         - name: consumer-conclusion
           image: xxxx.dkr.ecr.ap-northeast-2.amazonaws.com/stock/xxxx:latest
@@ -36,9 +35,6 @@ spec:
       imagePullSecrets:
         - name: stock-consumer
 
-      nodeSelector:
-        key: kube-master1
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -57,7 +53,6 @@ spec:
       labels:
         app: consumer-hoka
     spec:
-      hostNetwork: true
       containers:
         - name: consumer-hoka
           image: xxxx.dkr.ecr.ap-northeast-2.amazonaws.com/stock/xxxx:latest
@@ -77,6 +72,3 @@ spec:
 
       imagePullSecrets:
         - name: stock-consumer
-
-      nodeSelector:
-        key: kube-master1

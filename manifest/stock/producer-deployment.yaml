@@ -15,7 +15,6 @@ spec:
       labels:
         app: stock-producer
     spec:
-      hostNetwork: true
       containers:
         - name: stock-producer
           image: xxxx.dkr.ecr.ap-northeast-2.amazonaws.com/stock/xxxx:latest
@@ -31,6 +30,3 @@ spec:
 
       imagePullSecrets:
         - name: stock-producer
-
-      nodeSelector:
-        key: kube-master1

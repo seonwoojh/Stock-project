@@ -15,7 +15,6 @@ spec:
       labels:
         app: stock-stream
     spec:
-      hostNetwork: true
       containers:
         - name: stock-stream
           image: xxxx.dkr.ecr.ap-northeast-2.amazonaws.com/stock/xxxx:latest
