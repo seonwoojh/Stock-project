@@ -8,8 +8,8 @@ influx_url = os.environ['INFLUX_URL']
 influx_token = os.environ['INFLUX_TOKEN']
 kafka_server = os.environ['KAFKA_SERVER']
 group_id = os.environ['GROUP_ID']
-topic = os.environ['TOPIC']
-
+topic_1 = os.environ['TOPIC_1'] ## Required
+topic_2 = os.getenv('TOPIC_2') ## Optional
 
 ## InfluxDB를 초기화한다.
 influx_handler = InfluxDBHandler(
@@ -19,15 +19,16 @@ influx_handler = InfluxDBHandler(
     influx_bucket = 'stock'
     )
 
-
 ## Consumer를 초기화한다.
 consumer_config = {
     'bootstrap.servers': kafka_server,
     'group.id' : group_id,
     'auto.offset.reset': 'earliest'
 }
+
+topics = [topic_1, topic_2]
 consumer = Consumer(consumer_config)
-consumer.subscribe([f'{topic}']) ## 토픽이름 지정
+consumer.subscribe(topics) ## 토픽이름 지정
 
 try:
     print("Consuming messages from Kafka and writing to InfluxDB...")
@@ -39,7 +40,7 @@ try:
         if msg.error():
             if msg.error().code() == KafkaException._PARTITION_EOF:
                 # End of partition event
-                print(f"Reached end of partition: {msg.topic()} [{msg.partition()}] at offset {msg.offset()}")
+                print(f"Reached end of partition: {msg.topics()} [{msg.partition()}] at offset {msg.offset()}")
             else:
                 raise KafkaException(msg.error())
         else:
