@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: consumer-conclusion-deploy
+  name: consumer-deploy
   namespace: stock
   labels:
-    app: consumer-conclusion-deploy
+    app: consumer-deploy
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: consumer-conclusion
+      app: consumer-deploy
   template:
     metadata:
       labels:
-        app: consumer-conclusion
+        app: consumer-deploy
     spec:
       containers:
-        - name: consumer-conclusion
+        - name: consumer-deploy
           image: xxxx.dkr.ecr.ap-northeast-2.amazonaws.com/stock/xxxx:latest
           resources:
             limits:
@@ -29,45 +29,10 @@ spec:
               name: consumer-secret-dev
 
           env:
-          - name: TOPIC
+          - name: TOPIC_1
             value: "stock.samsung.conclusion.data"
 
-      imagePullSecrets:
-        - name: stock-consumer
-
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: consumer-hoka-deploy
-  namespace: stock
-  labels:
-    app: consumer-hoka-deploy
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: consumer-hoka
-  template:
-    metadata:
-      labels:
-        app: consumer-hoka
-    spec:
-      containers:
-        - name: consumer-hoka
-          image: xxxx.dkr.ecr.ap-northeast-2.amazonaws.com/stock/xxxx:latest
-          resources:
-            limits:
-              memory: "1Gi"
-              cpu: "1000m"
-          envFrom:
-          - configMapRef:
-              name: consumer-config-dev
-          - secretRef:
-              name: consumer-secret-dev
-
-          env:
-          - name: TOPIC
+          - name: TOPIC_2
             value: "stock.samsung.hoka.data"
 
       imagePullSecrets:
