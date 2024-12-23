@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: stream-config-dev
+  namespace: {{ .Values.global.namespace }}
+
+data:
+  KAFKA_SERVER: "{{ .Values.global.kafka_broker_address }}"
+  SOURCE_TOPIC: "{{ .Values.global.CONCLUSION_TOPIC }}"
+  DESTINATION_TOPIC: "{{ .Values.stream.destinationTopic }}"
+  STOCK_CODE: '5930.0'

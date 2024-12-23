@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deploy
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: stream-deploy
+spec:
+  replicas: {{ .Values.stream.replicaCount }}
+  selector:
+    matchLabels:
+      app: "{{ .Release.Name }}"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Release.Name }}"
+    spec:
+      containers:
+        - name: "{{ .Release.Name }}"
+          image: "{{ .Values.global.ecrNumber }}.dkr.ecr.ap-northeast-2.amazonaws.com/stock/stream:latest"
+          resources:
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+          envFrom:
+          - configMapRef:
+              name: stream-config-dev
+          
+          env:
+          - name: NOTI_TYPE
+            value: "{{ .Values.stream.notiType }}"
+          
+          - name: USER_CONDITION
+            value: "{{ .Values.stream.userCondition }}"
+
+      imagePullSecrets:
+        - name: stock-stream

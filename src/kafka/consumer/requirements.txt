@@ -1,0 +1,2 @@
+influxdb-client==1.48.0
+confluent-kafka==2.6.1

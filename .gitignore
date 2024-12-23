@@ -1,0 +1,25 @@
+# Local .terraform directories
+**/terraform/*.terraform
+**/terraform/*.tfstate
+**/terraform/*.tfstate.*
+
+**/terraform/crash.log
+**/terraform/crash.*.log
+
+**/terraform/*.tfvars
+**/terraform/*.tfvars.json
+
+**/terraform/override.tf
+**/terraform/override.tf.json
+**/terraform/*_override.tf
+**/terraform/*_override.tf.json
+
+**/terraform/.terraform.tfstate.lock.info
+
+**/terraform/.terraformrc
+**/terraform/terraform.rc
+
+##Kafka Python
+**/kafka/*/__pycache__
+
+**/helm-chart/Chart.lock

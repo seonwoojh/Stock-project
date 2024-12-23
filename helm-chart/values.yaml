@@ -1,0 +1,27 @@
+global:
+  namespace: ""
+  ecrNumber: ""
+  HOKA_TOPIC: ""
+  CONCLUSION_TOPIC: ""
+  kafka_broker_address: ""
+
+
+## 차트별 변수 정의
+producer:
+  enabled: false
+  replicaCount: 1
+  stockCode: ""
+  appKey: ""
+  appSecret: ""
+
+consumer:
+  enabled: false
+  replicaCount: 2
+  influxDBUrl: ""
+  influxDBToken: ""
+
+stream:
+  replicaCount: 
+  destinationTopic: ""
+  notiType: ""
+  userCondition: "|"
