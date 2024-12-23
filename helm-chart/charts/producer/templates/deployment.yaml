@@ -1,0 +1,34 @@
+{{- if .Values.producer.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deploy
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: producer-deploy
+spec:
+  replicas: {{ .Values.producer.replicaCount }}
+  selector:
+    matchLabels:
+      app: "{{ .Release.Name }}"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Release.Name }}"
+    spec:
+      containers:
+        - name: "{{ .Release.Name }}"
+          image: "{{ .Values.global.ecrNumber }}.dkr.ecr.ap-northeast-2.amazonaws.com/stock/{{ .Chart.Name }}:latest"
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 1500m
+              memory: 1G
+          envFrom:
+            - configMapRef:
+                name: producer-config-dev
+            - secretRef:
+                name: producer-secret-dev
+      imagePullSecrets:
+        - name: stock-producer
+{{- end }}

@@ -1,0 +1,41 @@
+{{- if .Values.consumer.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deploy
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: consumer-deploy
+spec:
+  replicas: {{ .Values.consumer.replicaCount }}
+  selector:
+    matchLabels:
+      app: "{{ .Release.Name }}"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Release.Name }}"
+    spec:
+      containers:
+        - name: "{{ .Release.Name }}"
+          image: "{{ .Values.global.ecrNumber }}.dkr.ecr.ap-northeast-2.amazonaws.com/stock/{{ .Chart.Name }}:latest"
+          resources:
+            limits:
+              cpu: 1500m
+              memory: 1G
+          envFrom:
+          - configMapRef:
+              name: consumer-config-dev
+          - secretRef:
+              name: consumer-secret-dev
+
+          env:
+          - name: TOPIC_1
+            value: "{{ .Values.global.HOKA_TOPIC }}"
+
+          - name: TOPIC_2
+            value: "{{ .Values.global.CONCLUSION_TOPIC }}"
+
+      imagePullSecrets:
+        - name: stock-consumer
+{{- end }}
