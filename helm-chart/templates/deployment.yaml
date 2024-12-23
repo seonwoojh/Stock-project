@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: "{{ .Release.Name }}"
-          image: "{{ .Values.global.ecrNumber }}.dkr.ecr.ap-northeast-2.amazonaws.com/stock/stream:latest"
+          image: "{{ .Values.global.ecrNumber }}.dkr.ecr.ap-northeast-2.amazonaws.com/stock/xxxx:latest"
           resources:
             limits:
               memory: "1Gi"
