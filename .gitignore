@@ -21,3 +21,5 @@
 
 ##Kafka Python
 **/kafka/*/__pycache__
+
+**/helm-chart/Chart.lock
