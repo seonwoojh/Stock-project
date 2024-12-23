@@ -1,15 +1,1 @@
-global:
-  namespace: ""
-  ecrNumber: ""
-  HOKA_TOPIC: ""
-  CONCLUSION_TOPIC: ""
-  kafka_broker_address: ""
-
-
-#### 애플리케이션 별 변수 정의
-producer:
-  enabled: false
-  replicaCount: 
-  stockCode: ""
-  appKey: ""
-  appSecret: ""
+enabled: false

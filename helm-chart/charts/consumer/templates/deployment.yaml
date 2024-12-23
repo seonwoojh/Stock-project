@@ -1,23 +1,23 @@
-{{- if .Values.consumer.enabled }}
+{{- if .Values.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-deploy
+  name: {{ .Chart.Name }}-deploy
   namespace: {{ .Values.global.namespace }}
   labels:
     app: consumer-deploy
 spec:
-  replicas: {{ .Values.consumer.replicaCount }}
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: "{{ .Release.Name }}"
+      app: "{{ .Chart.Name }}"
   template:
     metadata:
       labels:
-        app: "{{ .Release.Name }}"
+        app: "{{ .Chart.Name }}"
     spec:
       containers:
-        - name: "{{ .Release.Name }}"
+        - name: "{{ .Chart.Name }}"
           image: "{{ .Values.global.ecrNumber }}.dkr.ecr.ap-northeast-2.amazonaws.com/stock/{{ .Chart.Name }}:latest"
           resources:
             limits:

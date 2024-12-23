@@ -6,17 +6,17 @@ global:
   kafka_broker_address: ""
 
 
-#### 애플리케이션 별 변수 정의
+## 차트별 변수 정의
 producer:
   enabled: false
-  replicaCount: 
+  replicaCount: 1
   stockCode: ""
   appKey: ""
   appSecret: ""
 
 consumer:
   enabled: false
-  replicaCount: 
+  replicaCount: 2
   influxDBUrl: ""
   influxDBToken: ""
 
@@ -24,4 +24,4 @@ stream:
   replicaCount: 
   destinationTopic: ""
   notiType: ""
-  userCondition: ""
+  userCondition: "|"
