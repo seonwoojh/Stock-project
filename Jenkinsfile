@@ -1,6 +1,8 @@
+// 애플리케이션 이름을 초기화한다.
 def APP_NAME = "${name.split("/")[2]}"
 
 pipeline {
+    // 기본 환경 변수를 설정한다.
     environment {
         TIME_ZONE = 'Asia/Seoul'
         PROFILE = 'local'
@@ -9,6 +11,7 @@ pipeline {
     }
     
     agent {
+        // 이미지 빌드와 배포를 위한 jenkins agent pod를 생성한다.
         kubernetes {
             defaultContainer 'kaniko'
             yaml """
@@ -42,7 +45,9 @@ pipeline {
 """
         }
     }
+
     stages{
+        // 이미지 빌드와 배포에 사용할 환경변수를 설정하고 소스코드 변경 내역이 아닌 경우 스테이지를 종료한다.
         stage('Prepare') {
             steps {
                 
@@ -70,6 +75,7 @@ pipeline {
             }
         }
 
+        // 레포지토리의 코드를 fetch 하고 배포할 브랜치로 checkout 한다.
         stage('Checkout') {
             steps {
                 git branch: "${branch.split("/")[2]}",
@@ -87,7 +93,8 @@ pipeline {
             }
         }
 
-        stage('Build and Tag Docker Image') {
+        // 이미지를 빌드하고 ECR에 업로드한다.
+        stage('Build Image') {
             steps {
                 container('kaniko') {
                     sh '''executor \
@@ -109,6 +116,8 @@ pipeline {
                 }
             }
         }
+
+        // 템플릿을 활용해 DEV 브랜치의 파드를 배포한다. 추후 테스트 완료 후 Helm Chart로 패키징한다.
         stage('Deploy') {
             steps {
                 script {
