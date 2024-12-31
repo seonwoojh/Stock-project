@@ -61,7 +61,6 @@ pipeline {
                 echo 'Verify Environment'
                 script{
                     if (!env.CONTEXT.contains('src')) {
-                        slackSend channel: '#stock-project', color: 'danger', message: 'pipeline 실패 Stage: Prepare(Verify Env), Build Number: ${BUILD_NUMBER}, Changes must be in the src directory'// exit pipeline
                         error('Environment Variable Validation Failed: Changes must be in the src directory')
                     }
                 }
