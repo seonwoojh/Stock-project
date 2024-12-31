@@ -61,6 +61,7 @@ pipeline {
                 echo 'Verify Environment'
                 script{
                     if (!env.CONTEXT.contains('src')) {
+                        slackSend channel: '#stock-project', color: 'danger', message: 'pipeline 실패 Stage: Prepare(Verify Env), Build Number: ${BUILD_NUMBER}, Changes must be in the src directory'// exit pipeline
                         error('Environment Variable Validation Failed: Changes must be in the src directory')
                     }
                 }
@@ -70,7 +71,7 @@ pipeline {
                     echo 'success init in pipeline'
                 }
                 failure {
-                    error 'fail init in pipeline' // exit pipeline
+                    slackSend channel: '#stock-project', color: 'danger', message: 'pipeline 실패 Stage: Prepare, Build Number: ${BUILD_NUMBER}' // exit pipeline
                 }
             }
         }
@@ -88,7 +89,7 @@ pipeline {
                     echo 'success Checkout Project'
                 }
                 failure {
-                    echo 'fail Checkout Project'
+                    slackSend channel: '#stock-project', color: 'danger', message: 'pipeline 실패 Stage: Checkout, Build Number: ${BUILD_NUMBER}' // exit pipeline
                 }
             }
         }
@@ -109,10 +110,10 @@ pipeline {
             }
             post {
                 success {
-                    echo 'success dockerizing project'
+                    echo 'success Build Image'
                 }
                 failure {
-                    error 'fail dockerizing project' // exit pipeline
+                    slackSend channel: '#stock-project', color: 'danger', message: 'pipeline 실패 Stage: Build Image, Build Number: ${BUILD_NUMBER}' // exit pipeline
                 }
             }
         }
@@ -134,7 +135,7 @@ pipeline {
                     echo 'Deploy success'
                 }
                 failure {
-                     echo 'Deploy fail'
+                     slackSend channel: '#stock-project', color: 'danger', message: 'pipeline 실패 Stage: Deploy, Build Number: ${BUILD_NUMBER}, manifest: ${IMAGE_NAME}-deployment'// exit pipeline
                 }
             }
         }
