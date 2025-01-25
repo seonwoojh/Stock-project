@@ -1,8 +1,8 @@
-# Stock Notification Project
+# Real-time Data Processing Architecture
 
-> **Kafka Streams와 EKS를 활용한 사용자 맞춤 주식 알림 서비스**
+> **EKS와 Kafka, Jenkins를 활용한 실시간 데이터 처리 아키텍처와 주식 알림 서비스**
 
-- **투자 입문자**가 간편하게 **원하는 종목의 알림**을 받아볼 수 있도록 프로젝트를 진행했습니다.
+- 투자 입문자가 간편하게 원하는 종목의 알림을 받아볼 수 있도록 프로젝트를 진행했습니다.
 - 실시간 주가 API 데이터를 **스트림 서브 토폴로지를 통해 처리**하여 **다양한 타입을 알림**을 제공합니다.
 - **Terraform 프로비저닝**, **Kafka Application 개발**, **CI/CD Pipeline**, **Helm 차트 패키징**을 담당했습니다.
 
